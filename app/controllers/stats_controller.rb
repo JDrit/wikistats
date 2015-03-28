@@ -32,7 +32,7 @@ class StatsController < ApplicationController
             @page_views = overview_data["total_views"]
 
         rescue Net::ReadTimeout
-            Rails.logger.error "HTTP timeout to hbase fetching #{page_title}"
+            Rails.logger.error "HTTP timeout to hbase fetching #{@page_title}"
         rescue Exception => e
             Rails.logger.error "Unknown error #{e}"
         end
