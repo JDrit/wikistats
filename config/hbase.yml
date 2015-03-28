@@ -1,0 +1,12 @@
+defaults: &defaults
+    host: namenode.csh.rit.edu  # No 'http', it's a Thrift connection
+    port: 9090
+
+development:
+    <<: *defaults
+
+test:
+    <<: *defaults
+
+production:
+    <<: *defaults
