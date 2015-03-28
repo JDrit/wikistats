@@ -6,8 +6,11 @@ class ApiController < ApplicationController
         result = []
         
         begin
-            options = { :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, :timeout => 2}
-            response = HTTParty.get("http://namenode.csh.rit.edu:20550/overview/pageviews/timestamps", options)
+            options = { :headers => 
+                        { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, 
+                        :timeout => 2 }
+            response = HTTParty.get(
+                "http://namenode.csh.rit.edu:20550/overview/pageviews/timestamps", options)
             
             data = JSON.parse(response.body)
 
@@ -28,8 +31,11 @@ class ApiController < ApplicationController
         result = []
 
         begin
-            options = { :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, :timeout => 2}
-            response = HTTParty.get("http://namenode.csh.rit.edu:20550/pages/#{page_title}/timestamps", options)
+            options = { :headers => 
+                        { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, 
+                        :timeout => 2}
+            response = HTTParty.get(
+                "http://namenode.csh.rit.edu:20550/pages/#{page_title}/timestamps", options)
             
             data = JSON.parse(response.body)
 
