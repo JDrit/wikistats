@@ -17,3 +17,4 @@
 //
 //= require highstock
 //= require highstock/highcharts-more
+//= require bootstrap-sprockets

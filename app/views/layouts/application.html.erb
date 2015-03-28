@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Wikistats</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+<title>Wikistats</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+    <div class="container" id="main-container">
+        <%= yield %>
+    </div>
+    <h5 style="text-align:center">
+        Made by J.D. - <%= link_to("Wiki Stats", "https://github.com/JDrit/wikistats") %>
+    </h5>
 </body>
 </html>
