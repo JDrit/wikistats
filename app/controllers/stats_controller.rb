@@ -1,3 +1,8 @@
+require "json"
+require "base64"
+require "nokogiri"
+require "open-uri"
+
 class StatsController < ApplicationController
     def index
         @page_title = 'Main_Page'
@@ -7,12 +12,14 @@ class StatsController < ApplicationController
         @page_title = params[:page_title]
         @page_views = 0
 
-        begin
+        @image_url = get_image
+
+        begin    
             options = { :headers => 
                         { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, 
                         :timeout => 2}
             response = HTTParty.get(
-                "http://namenode.csh.rit.edu:20550/pages/#{page_title}/overview", options)
+                "http://namenode.csh.rit.edu:20550/pages/#{@page_title}/overview", options)
             
             data = JSON.parse(response.body)
             overview_data = {}
@@ -26,7 +33,22 @@ class StatsController < ApplicationController
 
         rescue Net::ReadTimeout
             Rails.logger.error "HTTP timeout to hbase fetching #{page_title}"
+        rescue Exception => e
+            Rails.logger.error "Unknown error #{e}"
         end
 
+    end
+
+
+
+    private
+    def get_image
+        page = Nokogiri::HTML(open("http://en.wikipedia.org/wiki/#{@page_title}"))
+        logos = page.css("a.image img")
+        if logos.length > 0 then
+            return "http:" + logos[0]['src']
+        else
+            return ""
+        end
     end
 end
