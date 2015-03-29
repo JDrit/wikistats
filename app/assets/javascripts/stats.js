@@ -1,5 +1,5 @@
 $(function() {
-  $.getJSON('/api/page/' + page_title + '?callback=?', function(data) {
+  $.getJSON('/api/page?page_title=' + page_title + '&callback=?', function(data) {
     $('#view-graph').highcharts('StockChart', {
       title: {
         text: 'Page views by the hour'

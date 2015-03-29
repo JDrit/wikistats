@@ -13,7 +13,7 @@ class StatsController < ApplicationController
         @page_views = 0
 
         @image_url = get_image
-
+=begin
         begin    
             options = { :headers => 
                         { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, 
@@ -36,19 +36,22 @@ class StatsController < ApplicationController
         rescue Exception => e
             Rails.logger.error "Unknown error #{e}"
         end
-
+=end
     end
 
 
 
     private
     def get_image
-        page = Nokogiri::HTML(open("http://en.wikipedia.org/wiki/#{@page_title}"))
-        logos = page.css("a.image img")
-        if logos.length > 0 then
-            return "http:" + logos[0]['src']
-        else
-            return ""
+        begin
+            page = Nokogiri::HTML(open("http://en.wikipedia.org/wiki/#{@page_title}"))
+            logos = page.css("a.image img")
+            if logos.length > 0 then
+                return "http:" + logos[0]['src']
+            end
+        rescue Exception => e
+            Rails.logger.error "Get image error #{e}"
         end
+        return ""
     end
 end
