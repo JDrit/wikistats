@@ -1,4 +1,35 @@
-<h1 id="page_title"><%= @page_title %></h1>
+<h1>Wikipedia Page View Comparison</h1>
+<br>
+<h4>Compare multiple pages side-by-side</h4>
 
+<div class="row">
+    <div class="col-md-6">
+        <button id="group-by-hour" class="btn btn-default">Group by hour</button>
+        <button id="group-by-day" class="btn btn-default">Group by day</button>
+    </div>
+    <div class="col-md-6">
+        <div class="control-group" id="fields">
+            <div class="controls"> 
+                <%= form_tag do %>
+                    <%= submit_tag "", :style => "display: none;" %>
+                    <div class="entry input-group col-xs-8">
+                        <input class="form-control" name="page_titles[]" type="text" placeholder="Enter a page title" style="width: 320px;"/>
+                        <span class="input-group-groupbtn">
+                            <button class="btn btn-success btn-add" type="button">
+                                <span class="glyphicon glyphicon-plus"></span>
+                            </button>
+                        </span>
+                    </div>
+                <% end %>    
+                <small>Press <span class="glyphicon glyphicon-plus gs"></span> to add another form field :)</small>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div id="container" style="height: 400px; min-width: 310px"></div>
+<div id="view-graph" style="height: 400px; min-width: 310px"></div>
+
+<%= javascript_tag do %>
+    window.page_titles = <%= raw @page_titles %>;
+<% end %>

@@ -33,7 +33,7 @@ class ApiController < ApplicationController
         begin
             options = { :headers => 
                         { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, 
-                        :timeout => 2}
+                        :timeout => 7}
             response = HTTParty.get(
                 "http://namenode.csh.rit.edu:20550/pages/#{page_title}/timestamps", options)
             

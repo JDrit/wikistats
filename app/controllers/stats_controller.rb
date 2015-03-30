@@ -2,56 +2,52 @@ require "json"
 require "base64"
 require "nokogiri"
 require "open-uri"
+require "httpclient"
 
 class StatsController < ApplicationController
     def index
-        @page_title = 'Main_Page'
+        if params[:page_titles].nil? then
+            @page_titles = ["Google", "Facebook", "Apple_Inc.", "Twitter", "Microsoft"]
+        else
+            @page_titles = params[:page_titles].split(",").map { |title| get_page_info(title)[0] }
+        end
+
+    end
+
+    def show_pages
+        page_titles = ""
+        params[:page_titles].each do |title|
+            page_titles += title + ","
+        end
+        redirect_to action: "index", page_titles: page_titles
     end
 
     def show
         @page_title = params[:page_title]
         @page_views = 0
 
-        @image_url = get_image
-=begin
-        begin    
-            options = { :headers => 
-                        { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, 
-                        :timeout => 2}
-            response = HTTParty.get(
-                "http://namenode.csh.rit.edu:20550/pages/#{@page_title}/overview", options)
-            
-            data = JSON.parse(response.body)
-            overview_data = {}
-
-            data['Row'][0]['Cell'].each do |cell|
-                column = Base64.decode64(cell['column']).split(":")[1]
-                value = Base64.decode64(cell['$'])
-                overview_data[column] = value
-            end
-            @page_views = overview_data["total_views"]
-
-        rescue Net::ReadTimeout
-            Rails.logger.error "HTTP timeout to hbase fetching #{@page_title}"
-        rescue Exception => e
-            Rails.logger.error "Unknown error #{e}"
+        true_title, @image_url = get_page_info @page_title
+        if true_title != @page_title then
+            redirect_to action: "show", page_title: URI::encode(true_title)
         end
-=end
     end
 
-
-
     private
-    def get_image
+    # returns a tuple of the true title of the page and an image url, if there is one
+    def get_page_info page_title
         begin
-            page = Nokogiri::HTML(open("http://en.wikipedia.org/wiki/#{@page_title}"))
+            page = Nokogiri::HTML(open("http://en.wikipedia.org/wiki/#{page_title}"))
+            title = page.css("#firstHeading").text.tr(" ", "_")
             logos = page.css("a.image img")
             if logos.length > 0 then
-                return "http:" + logos[0]['src']
+                return title, "http:" + logos[0]['src']
+            else
+                return title, ""
             end
+
         rescue Exception => e
-            Rails.logger.error "Get image error #{e}"
+            Rails.logger.error "Error getting page info for #{page_title} : #{e}"
+            return @page_title, ""
         end
-        return ""
     end
 end
