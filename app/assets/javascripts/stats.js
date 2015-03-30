@@ -48,10 +48,10 @@ $(function() {
     var count = 0;
 
     $.each(page_titles, function(i, title) {
-         $.getJSON('/api/page?page_title=' + title + '&callback=?', function(data) {
+         $.getJSON('/api/page/' + encodeURIComponent(title) + '?callback=?', function(data) {
             count += 1;
             series[i] = {
-                name: title,
+                name: decodeURIComponent(title),
                 data: data,
                 type: 'areaspline',
                 dataGrouping: {
@@ -78,23 +78,27 @@ $(function() {
          });
     });
 
-    $("#group-by-hour").click(function(){
-        //TODO update all series
-        $("#view-graph").highcharts().series[0].update({
-            dataGrouping: {
-                units: [ ['hour', [1]] ]   
-            }
-        });
+    $("#group-by-month").click(function(){
+        var series_length = $("#view-graph").highcharts().series.length;
+        for (var i = 0 ; i < series_length ; i++) {
+            $("#view-graph").highcharts().series[i].update({
+                dataGrouping: {
+                    units: [ ['month', [1]] ]   
+                }
+            });
+        }
     });
     
     $("#group-by-day").click(function(){
-        //TODO update all series
-        $("#view-graph").highcharts().series[0].update({
-            dataGrouping: {
-                units: [ ['day', [1]] ]   
-            }
-        });
-    });
+        var series_length = $("#view-graph").highcharts().series.length;
+        for (var i = 0 ; i < series_length ; i++) {
+            $("#view-graph").highcharts().series[i].update({
+                dataGrouping: {
+                    units: [ ['day', [1]] ]   
+                }
+            });
+        }
+     });
     
     $(document).on('click', '.btn-add', function(e) {
         e.preventDefault();

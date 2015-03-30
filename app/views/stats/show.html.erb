@@ -2,7 +2,7 @@
 <br>
 <div class="row text-center">
     <div class="col-md-6">
-        <a href="http://en.wikipedia.org/wiki/<%= @page_title %>">
+        <a href="http://en.wikipedia.org/wiki/<%= @page_title_url %>">
             <h1 id="page_title"><%= @page_title.tr("_", " ") %></h1>
         </a>
     </div>
@@ -10,7 +10,7 @@
         <img src="<%= @image_url %>" class="img-rounded">
     </div>
 </div>
-<button id="group-by-hour" class="btn btn-default">Group by hour</button>
+<button id="group-by-month" class="btn btn-default">Group by month</button>
 <button id="group-by-day" class="btn btn-default">Group by day</button>
 
 <div id="view-graph" style="height: 400px; min-width: 310px"></div>

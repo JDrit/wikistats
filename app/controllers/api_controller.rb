@@ -1,5 +1,6 @@
 require "json"
 require "base64"
+require "open-uri"
 
 class ApiController < ApplicationController
     def get_index
@@ -27,9 +28,9 @@ class ApiController < ApplicationController
     end
     
     def get_page
-        page_title = params[:page_title]
+        page_title = Rack::Utils.escape(params[:page_title])
         result = []
-
+        Rails.logger.info Rack::Utils.escape(page_title)
         begin
             options = { :headers => 
                         { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, 

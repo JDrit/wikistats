@@ -1,10 +1,8 @@
 Rails.application.routes.draw do
     root 'stats#index'
-    get 'stats/index'
-
     match '/', to: 'stats#show_pages', via: 'post'
-    match '/page/', to: 'stats#show', via: 'get'
-    match '/api/page', to: 'api#get_page', via: 'get'
+    match '/page/:page_title', to: 'stats#show', via: 'get', constraints: { :page_title => /[\w+\.\%]+/ }
+    match '/api/page/:page_title', to: 'api#get_page', via: 'get', constraints: { :page_title => /[\w+\.\%]+/ }
     #match '/api/page/:page_title', to: 'api#get_page', via: 'get', constraints: { :page_title => /[\w+\.]+/ }
 
   # The priority is based upon order of creation: first created -> highest priority.

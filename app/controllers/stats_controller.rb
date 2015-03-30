@@ -23,12 +23,13 @@ class StatsController < ApplicationController
     end
 
     def show
+        @page_title_url = Rack::Utils.escape(params[:page_title])
         @page_title = params[:page_title]
         @page_views = 0
 
         true_title, @image_url = get_page_info @page_title
         if true_title != @page_title then
-            redirect_to action: "show", page_title: URI::encode(true_title)
+            redirect_to action: "show", page_title: true_title
         end
     end
 
