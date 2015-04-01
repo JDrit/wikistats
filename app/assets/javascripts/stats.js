@@ -48,16 +48,16 @@ $(function() {
     var count = 0;
 
     $.each(page_titles, function(i, title) {
-         $.getJSON('/api/page/' + encodeURIComponent(title) + '?callback=?', function(data) {
+         $.getJSON('/api/page/' + encodeURIComponent(title).replace(/[!'()]/g, escape).replace(/\*/g, "%2A") + '?callback=?', function(data) {
             count += 1;
             series[i] = {
-                name: decodeURIComponent(title),
+                name: decodeURIComponent(title).replace(/_/g, " "),
                 data: data,
                 type: 'areaspline',
                 dataGrouping: {
                     approximation: 'sum'  
                 },
-                gapSize: 5,
+                gapSize: 0,
                 tooltip: {
                     valueDecimals: 0
                 },

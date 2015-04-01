@@ -9,16 +9,15 @@ class StatsController < ApplicationController
         if params[:page_titles].nil? then
             @page_titles = ["Google", "Facebook", "Apple_Inc.", "Twitter", "Microsoft"]
         else
-            @page_titles = params[:page_titles].split(",").map { |title| get_page_info(title)[0] }
+            @page_titles = params[:page_titles].split("~~").map { |title| get_page_info(title)[0] }
         end
 
     end
 
     def show_pages
         page_titles = ""
-        params[:page_titles].each do |title|
-            page_titles += title + ","
-        end
+        params[:page_titles].each { |title| page_titles += title + "~~" }
+        page_titles = page_titles[0..-3]
         redirect_to action: "index", page_titles: page_titles
     end
 
