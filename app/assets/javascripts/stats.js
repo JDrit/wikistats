@@ -94,6 +94,7 @@ $(function() {
         for (var i = 0 ; i < series_length ; i++) {
             $("#view-graph").highcharts().series[i].update({
                 dataGrouping: {
+                    forced: true,
                     units: [ ['day', [1]] ]   
                 }
             });

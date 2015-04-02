@@ -9,7 +9,7 @@ class StatsController < ApplicationController
         if params[:page_titles].nil? then
             @page_titles = ["Google", "Facebook", "Apple_Inc.", "Twitter", "Microsoft"]
         else
-            @page_titles = params[:page_titles].split("~~").map { |title| get_page_info(title)[0] }
+            @page_titles = params[:page_titles].split("~~").map { |title| get_page_info(title.tr(" ", "_"))[0] }
         end
 
     end
