@@ -4,8 +4,26 @@
 
 <div class="row">
     <div class="col-md-6">
-        <button id="group-by-month" class="btn btn-default">Group by month</button>
-        <button id="group-by-day" class="btn btn-default">Group by day</button>
+
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" 
+                id="group-dropdown" data-toggle="dropdown" aria-expanded="true">
+                Group by
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="group-dropdown">
+                <li role="presentation">
+                    <a id="group-none" role="menuitem" tabindex="-1" href="#">None</a>
+                </li>
+                <li role="presentation">
+                    <a id="group-day" role="menuitem" tabindex="-1" href="#">Day</a>
+                </li>
+                <li role="presentation">
+                    <a id="group-month" role="menuitem" tabindex="-1" href="#">Month</a>
+                </li>
+            </ul>
+        </div>
+
     </div>
     <div class="col-md-6">
         <div class="control-group" id="fields">

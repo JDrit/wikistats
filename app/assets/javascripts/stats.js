@@ -77,30 +77,44 @@ $(function() {
             }
          });
     });
-
-    $("#group-by-month").click(function(){
+    
+    $("#group-none").click(function(){
         var series_length = $("#view-graph").highcharts().series.length;
         for (var i = 0 ; i < series_length ; i++) {
             $("#view-graph").highcharts().series[i].update({
                 dataGrouping: {
+                    enabled: false
+                }
+            });
+        }
+    });
+    $("#group-month").click(function(){
+        var series_length = $("#view-graph").highcharts().series.length;
+        for (var i = 0 ; i < series_length ; i++) {
+            $("#view-graph").highcharts().series[i].update({
+                dataGrouping: {
+                    enabled: true,
+                    forced: true,
                     units: [ ['month', [1]] ]   
                 }
             });
         }
     });
     
-    $("#group-by-day").click(function(){
+    $("#group-day").click(function(){
         var series_length = $("#view-graph").highcharts().series.length;
         for (var i = 0 ; i < series_length ; i++) {
             $("#view-graph").highcharts().series[i].update({
                 dataGrouping: {
+                    enabled: true,
                     forced: true,
                     units: [ ['day', [1]] ]   
                 }
             });
         }
-     });
+     });    
     
+    // for the page selector
     $(document).on('click', '.btn-add', function(e) {
         e.preventDefault();
 
