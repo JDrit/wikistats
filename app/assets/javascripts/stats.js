@@ -1,5 +1,10 @@
 $(function() {
-    
+    Highcharts.setOptions({
+        global: {
+            useUTC: false    
+        }  
+    });
+
     var create_chart = function(series) {
         $('#view-graph').highcharts('StockChart', {
             title: {
