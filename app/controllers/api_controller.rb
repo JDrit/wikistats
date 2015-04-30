@@ -56,6 +56,7 @@ class ApiController < ApplicationController
                 count = Base64.decode64(cell['$']).to_i
                 result << [timestamp, count]
             end
+            result = result.sort_by{ |e| e[0] }
         rescue Net::ReadTimeout
             Rails.logger.error "HTTP timeout to hbase fetching #{page_title}"
         end
